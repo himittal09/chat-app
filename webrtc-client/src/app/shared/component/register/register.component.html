@@ -1,0 +1,32 @@
+<form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="shadow">
+
+  <div class="form-group">
+    <label for="displayName">Display Name</label>
+    <input type="text" required ngModel id="displayName" name="displayName" class="form-control"
+      placeholder="E.g. John Doe" autocomplete="name">
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input type="email" required ngModel id="email" name="email" class="form-control" placeholder="john@yahoo.com"
+      autocomplete="username">
+  </div>
+
+  <div class="form-group">
+    <label for="photoURL">Profile Picture</label>
+    <input type="text" ngModel id="photoURL" name="photoURL" class="form-control"
+      placeholder="https://imgur.com/john.jpg" autocomplete="photo">
+  </div>
+
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" required ngModel id="password" name="password" class="form-control" placeholder="shhh...."
+      autocomplete="new-password">
+  </div>
+
+  <div class="form-group">
+    <span>Already Registered? Login <a routerLink="/login">Here!</a></span>
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="tryingLoggingIn">Register</button>
+</form>

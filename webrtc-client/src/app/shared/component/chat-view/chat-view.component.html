@@ -1,0 +1,11 @@
+<div [ngClass]="{'parent':!isSmallScreen}">
+  <div>
+    <header>
+      <img [src]="loggedInUser.photoURL" class="profile-image" alt="Profile Pic" onerror="this.onerror=null; this.src='assets/asdf.svg'">
+      <span>{{loggedInUser.displayName}}</span>
+      <button type="button" (click)="logout()" class="btn">Logout</button>
+    </header>
+    <web-user-list></web-user-list>
+  </div>
+  <web-user-chat *ngIf="!isSmallScreen"></web-user-chat>
+</div>

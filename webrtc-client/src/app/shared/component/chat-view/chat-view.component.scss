@@ -1,0 +1,25 @@
+.parent {
+  display: grid;
+  grid-template-columns: minmax(250px, 30%) 1fr;
+}
+
+header {
+  background-color:#ededed;
+  height: 60px;
+  padding: 10px 16px;
+  display: flex;
+  .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  span {
+    flex: 1 1 auto;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  button.btn {
+    background-color: #919191;
+    color: white
+  }
+}

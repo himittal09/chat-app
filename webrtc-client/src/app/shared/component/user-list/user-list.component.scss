@@ -1,0 +1,30 @@
+.list-container {
+  height: calc(100vh - 60px);
+  overflow-y: auto;
+  .user-container {
+    cursor: pointer;
+    text-overflow: ellipsis;
+    padding: 10px 16px;
+    display: flex;
+    div.profile {
+      margin-right: 10px;
+      .profile-image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+    }
+    div.namecard {
+      p {
+        margin-bottom: 0;
+      }
+    }
+    &:hover {
+      background-color: #f5f5f5;
+    }
+    &:not(:last-child) {
+      border-bottom: 1px solid #f2f2f2;
+    }
+  }
+  
+}

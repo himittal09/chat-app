@@ -1,0 +1,39 @@
+.remote-video {
+  border: 1px solid #cddfe7;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+}
+
+.overlay {
+  z-index: 10;
+
+  .local-video {
+    position: absolute;
+    border: 1px solid #cddfe7;
+    bottom: 60px;
+    right: 40px;
+    border-radius: 5px;
+    width: 300px;
+  }
+
+  .control-buttons {
+    position: absolute;
+    bottom: 60px;
+    left: 40px;
+
+    button {
+      background-color: white;
+      margin: 8px;
+      border-radius: 10px;
+      border: 0;
+    }
+    
+    .endcallbutton {
+      color: red;
+    }
+  }
+  
+}

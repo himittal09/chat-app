@@ -1,0 +1,7 @@
+/node_modules
+npm-debug.log
+.DS_Store
+/*.env
+webrtc-client/node_modules/
+
+chat-app-8e7de-firebase-adminsdk-led1t-071d1057e1.json

@@ -1,0 +1,11 @@
+<div class="list-container">
+  <div *ngFor="let user of userList" (click)="selectUser(user)" class="user-container">
+    <div class="profile">
+      <img [src]="user.photoURL" class="profile-image" alt="Profile Pic" onerror="this.onerror=null; this.src='assets/asdf.svg'">
+    </div>
+    <div class="namecard">
+      <span>{{user.displayName}}</span>
+      <p>{{user.email}}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>WebrtcClient</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    body {
+      overflow-y: hidden;
+      /* overscroll-behavior-y: none; */
+    }
+
+    body::-webkit-scrollbar {
+      width: 6px !important;
+      height: 6px !important;
+      scrollbar-color: rgba(0, 0, 0, .2) hsla(0, 0%, 100%, .1);
+      scrollbar-width: thin;
+    }
+
+    body::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, .2)
+    }
+  </style>
+</head>
+
+<body>
+  <web-root></web-root>
+
+  <script>
+    
+document.addEventListener('touchstart', function (event) { event.preventDefault(); }, { passive: true });
+  </script>
+  <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+  
+</body>
+
+</html>

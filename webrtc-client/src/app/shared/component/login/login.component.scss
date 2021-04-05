@@ -1,0 +1,15 @@
+:host {
+  background-color: rgb(236, 236, 236);
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  form {
+    padding: 5%;
+    background-color: white;
+    border: 2px solid gray;
+    border-radius: 5%;
+    button {
+      margin-top: 10px;
+    }
+  }
+}

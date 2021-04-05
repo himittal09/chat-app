@@ -1,0 +1,120 @@
+header {
+  height: 60px;
+  padding: 10px 16px;
+  background-color: #ededed;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  .profile-image {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+  }
+  button img {
+    color: white;
+  }
+
+  .name-card {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    min-width: 0;
+  }
+
+  .icon-button {
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    padding: 0.375rem;
+    vertical-align: middle;
+    text-align: center;
+    color: black;
+    text-decoration: none;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    user-select: none;
+    width: 40px;
+    height: 40px;
+  }
+
+  & > div {
+    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
+  }
+}
+
+section.chat-section {
+  overflow-y: auto;
+  height: calc(100vh - 120px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background-image: url('/assets/chat-background.png');
+  background-color: #7acba5;
+  background-repeat: repeat;
+  // #00bfa5
+  // #d4d8d3
+
+  div[data-msgalign="true"] {
+    align-self: flex-end;
+    .message-container {
+      align-items: flex-end;
+      background-color: #dcf8c6;
+    }
+  }
+  div[data-msgalign="false"] {
+    align-self: flex-start;
+    .message-container {
+      align-items: flex-start;
+      background-color: white;
+    }
+  }
+  div[data-msgalign] {
+    max-width: 80%;
+    margin: 5px;
+  }
+  .message-container {
+    // border: 1px solid black;
+    border-radius: 6px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    p {
+      margin: 0;
+    }
+  }
+}
+
+footer {
+  height: 60px;
+  background-color: #f0f0f0;
+  padding: 10px 14px;
+  display: flex;
+  input {
+    border-radius: 21px;
+    width: inherit;
+    flex: 1 1 auto;
+  }
+  button.btn {
+    margin-left: 10px;
+  }
+}
+
+.margin {
+  height: 100vh;
+  display: grid;
+  padding: 5%;
+}
+
+.no-user-selected {
+  border-radius: 16px;
+  border: 2px solid gray;
+  display: grid;
+  place-items: center;
+  p {
+    text-align: center;
+    font-size: x-large;
+  }
+}
