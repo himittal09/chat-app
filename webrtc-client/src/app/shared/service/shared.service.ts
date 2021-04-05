@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { rejects } from 'assert';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 // development
@@ -48,7 +49,7 @@ export class SharedService {
   constructor(private router: Router, private http: HttpClient) {
     if (environment.production)
     {
-      this.socket = io({autoConnect: false});
+      this.socket = io(environment.serverURL, {autoConnect: false});
     }
     else
     {
@@ -71,11 +72,8 @@ export class SharedService {
     });
 
     // DONE
-    this.socket.on("update-user-list", ({ data }: { data: any }) => {
+    this.socket.on("update-user-list", ({ data }) => {
       const users: User[] = data.users;
-
-      // it is only one user imo
-      // check if that user already exists
       for (const user of users)
       {
         let found = false;
@@ -224,14 +222,22 @@ export class SharedService {
   }
 
   // done
-  async loginUser(userData: User, action: string = 'login') {
+  async loginUser(userData: User, action: string = 'login'): Promise<void> {
     let endPoint = action === 'login' ? 'login' : 'register';
-    this.socket.connect();
-    const user = await this.http.post<Partial<User>>(`${environment.serverURL}/${endPoint}`, userData).toPromise();
-    user.socketId = this.socket.id;
-    this._loggedInUser = user;
-    this.socket.emit('login', {
-      data: {user}
+    return new Promise<void>(async (resolve, reject) => {
+      try {
+        this.socket.connect();
+        const user = await this.http.post<Partial<User>>(`${environment.serverURL}/${endPoint}`, userData).toPromise();
+        user.socketId = this.socket.id;
+        this._loggedInUser = user;
+        this.socket.emit('login', {
+          data: {user}
+        });
+        resolve();      
+      } catch (error) {
+        reject(error);
+        
+      }
     });
   }
 

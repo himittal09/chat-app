@@ -66,7 +66,6 @@ if (process.env.NODE_ENV !== 'production') {
     origin: true
   }));
 }
-app.use(express.static(path.join(__dirname, "./webrtc-client/dist")));
 app.use(bodyParser.json());
 
 let activeUsers: User[] = [];
