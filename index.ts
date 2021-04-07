@@ -20,7 +20,7 @@ admin.initializeApp({
   databaseURL: "https://chat-app-8e7de-default-rtdb.firebaseio.com"
 });
 
-let sid = '', token = '';
+let sid: string = '', token: string = '';
 if (process.env.NODE_ENV === 'production') {
   sid = <string>process.env.TWILLIO_ACC_SID_PROD;
   token = <string>process.env.TWILLIO_AUTH_TOKEN_PROD;
@@ -36,13 +36,13 @@ const firestore = admin.firestore();
 const app: Express = express();
 const server = http.createServer(app);
 let socketIOServerConfig = {};
-if (process.env.NODE_ENV !== 'production') {
+// if (process.env.NODE_ENV !== 'production') {
   socketIOServerConfig = {
     cors: {
       origin: true
     }
   }
-}
+// }
 const io: SocketIOServer = new SocketIOServer(server, socketIOServerConfig);
 
 interface User {
@@ -61,11 +61,11 @@ enum MessageType {
   'geolocation'
 }
 
-if (process.env.NODE_ENV !== 'production') {
+// if (process.env.NODE_ENV !== 'production') {
   app.use(cors({
     origin: true
   }));
-}
+// }
 app.use(express.static(path.join(__dirname, "./webrtc-client/dist")));
 app.use(bodyParser.json());
 
