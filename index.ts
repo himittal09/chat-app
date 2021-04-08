@@ -20,16 +20,8 @@ admin.initializeApp({
   databaseURL: "https://chat-app-8e7de-default-rtdb.firebaseio.com"
 });
 
-let sid: string = '', token: string = '';
-if (process.env.NODE_ENV === 'production') {
-  sid = <string>process.env.TWILLIO_ACC_SID_PROD;
-  token = <string>process.env.TWILLIO_AUTH_TOKEN_PROD;
-}
-else
-{
-  sid = <string>process.env.TWILLIO_ACC_SID_TEST;
-  token = <string>process.env.TWILLIO_AUTH_TOKEN_TEST;
-}
+const sid = <string>process.env.TWILLIO_ACC_SID_PROD;
+const token = <string>process.env.TWILLIO_AUTH_TOKEN_PROD;
 
 const twillioClient  = Twilio(sid, token);
 const firestore = admin.firestore();
@@ -165,6 +157,7 @@ app.post('/geticeserver', (req: Request, res: Response) => {
     lastFetchedCreds = token.dateCreated;
     res.send(token.iceServers);
   }, (error: Error) => {
+    console.log(error);
     res.status(500).send(error);
   })
 });

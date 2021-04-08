@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { rejects } from 'assert';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 // development
@@ -49,11 +48,11 @@ export class SharedService {
   constructor(private router: Router, private http: HttpClient) {
     if (environment.production)
     {
-      this.socket = io(environment.serverURL, {autoConnect: false});
+      this.socket = io(environment.serverURL, {autoConnect: false, transports: ['websocket']});
     }
     else
     {
-      this.socket = io(environment.serverURL, {autoConnect: false});
+      this.socket = io(environment.serverURL, {autoConnect: false, transports: ['websocket']});
     }
     this.users = new BehaviorSubject([]);
     this.chats = new Map();
