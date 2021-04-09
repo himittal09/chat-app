@@ -24,7 +24,8 @@ export class SharedService {
   private chats: Map<string, ChatMessage[]>;
   private eventCallback = new Subject<{
     eventName: string,
-    data?: any
+    data?: any,
+    callback?: (...parameters: any[]) => void
   }>();
   eventCallback$ = this.eventCallback.asObservable();
 
@@ -44,6 +45,8 @@ export class SharedService {
   private config: RTCConfiguration = {
     iceServers: []
   };
+
+  private stream: MediaStream;
 
   constructor(private router: Router, private http: HttpClient) {
     if (environment.production)
@@ -143,13 +146,17 @@ export class SharedService {
 
     // DONE
     this.socket.on("ice-candidate-generated", async ({ candidate }: { candidate: RTCIceCandidate }) => {
+      if (!candidate)
+      {
+        return;
+      }
       if (!this.finishSDPVideoOffer) {
         this.iceCandidates.push(candidate);
         return;
       }
       try {
-        let cdd = new RTCIceCandidate(candidate);
-        await this.peerConnection?.addIceCandidate(cdd);
+        // let cdd = new RTCIceCandidate(candidate);
+        await this.peerConnection?.addIceCandidate(candidate);
       } catch (err) {
         this.eventCallback.next({
           eventName: 'ICE_CANDIDATE_GENERATE_ERROR',
@@ -350,7 +357,6 @@ export class SharedService {
     this.sendingVideo = true;
     this.sendingAudio = true;
 
-    
     // peerConnection?.addEventListener('icecandidateerror', (err: RTCPeerConnectionIceErrorEvent) => { });
     // peerConnection?.addEventListener('connectionstatechange', () => { });
     // peerConnection?.addEventListener('statsended', () => { });
@@ -439,6 +445,8 @@ export class SharedService {
         data: err
       });
     }
+
+
   }
 
   // done
@@ -500,33 +508,35 @@ export class SharedService {
   }
 
   async turnOffVideo() {
-    if (!this.videoTransceiver) {
-      return;
-    }
-    if (this.sendingVideo) {
-      await this.videoTransceiver.sender.replaceTrack(this.videoTrack);
-      this.videoTransceiver.direction = 'sendonly';
-    }
-    else {
-      await this.videoTransceiver.sender.replaceTrack(null);
-      this.videoTransceiver.direction = 'inactive';
-    }
-    this.sendingVideo = !this.sendingVideo;
+    this.stream.getVideoTracks()[0].enabled = !(this.stream.getVideoTracks()[0].enabled);
+    // if (!this.videoTransceiver) {
+    //   return;
+    // }
+    // if (this.sendingVideo) {
+    //   await this.videoTransceiver.sender.replaceTrack(this.videoTrack);
+    //   this.videoTransceiver.direction = 'sendonly';
+    // }
+    // else {
+    //   await this.videoTransceiver.sender.replaceTrack(null);
+    //   this.videoTransceiver.direction = 'inactive';
+    // }
+    // this.sendingVideo = !this.sendingVideo;
   }
 
   async turnOffAudio() {
-    if (!this.audioTransceiver) {
-      return;
-    }
-    if (this.sendingAudio) {
-      await this.audioTransceiver.sender.replaceTrack(this.audioTrack);
-      this.audioTransceiver.direction = 'sendonly';
-    }
-    else {
-      await this.audioTransceiver.sender.replaceTrack(null);
-      this.audioTransceiver.direction = 'inactive';
-    }
-    this.sendingAudio = !this.sendingAudio;
+    this.stream.getAudioTracks()[0].enabled = !(this.stream.getAudioTracks()[0].enabled);
+    // if (!this.audioTransceiver) {
+    //   return;
+    // }
+    // if (this.sendingAudio) {
+    //   await this.audioTransceiver.sender.replaceTrack(this.audioTrack);
+    //   this.audioTransceiver.direction = 'sendonly';
+    // }
+    // else {
+    //   await this.audioTransceiver.sender.replaceTrack(null);
+    //   this.audioTransceiver.direction = 'inactive';
+    // }
+    // this.sendingAudio = !this.sendingAudio;
   }
 
   attachMediaTracksFromOtherEnd(stream: MediaStream) {
@@ -535,13 +545,16 @@ export class SharedService {
     if (!this.peerConnection) {
       return;
     }
+    this.stream = stream;
+    // console.log(stream.getVideoTracks());
+    // console.log(stream.getAudioTracks());
     // this.audioTrack = stream.getAudioTracks()[0];
     // if (this.sendingAudio)
     // {
-    //   this.audioTransceiver = this.peerConnection.addTransceiver(this.audioTrack, {
-    //     direction: "sendonly",
-    //     streams: [stream]
-    //   });
+      // this.audioTransceiver = this.peerConnection.addTransceiver(this.audioTrack, {
+      //   direction: 'sendonly',
+      //   streams: [stream]
+      // });
     // }
     // else
     // {
@@ -553,10 +566,10 @@ export class SharedService {
     // this.videoTrack = stream.getVideoTracks()[0];
     // if (this.sendingVideo)
     // {
-    //   this.videoTransceiver = this.peerConnection.addTransceiver(this.videoTrack, {
-    //     direction: 'sendonly',
-    //     streams: [stream]
-    //   });
+      // this.videoTransceiver = this.peerConnection.addTransceiver(this.videoTrack, {
+      //   direction: 'sendonly',
+      //   streams: [stream]
+      // });
     // }
     // else
     // {

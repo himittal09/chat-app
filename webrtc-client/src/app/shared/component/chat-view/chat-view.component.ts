@@ -54,6 +54,10 @@ export class ChatViewComponent implements OnInit, OnDestroy {
         alert('login failed!!');
         this.router.navigate(['/login']);
       }
+      else
+      {
+        console.log(event);
+      }
     });
     try {
       await this.service.setIceServers();
