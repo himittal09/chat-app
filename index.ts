@@ -53,11 +53,11 @@ enum MessageType {
   'geolocation'
 }
 
-if (process.env.NODE_ENV !== 'production') {
+// if (process.env.NODE_ENV !== 'production') {
   app.use(cors({
-    origin: true
+    origin: 'https://calm-stream-20312.herokuapp.com'
   }));
-}
+// }
 app.use(express.static(path.join(__dirname, "webrtc-client/dist")));
 app.use(bodyParser.json());
 
