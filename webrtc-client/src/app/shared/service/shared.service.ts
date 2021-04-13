@@ -583,6 +583,15 @@ export class SharedService {
     }
   }
 
+  stopStream ()
+  {
+    for (const track of this.stream.getTracks())
+    {
+      track.stop();
+    }
+    this.stream = null;
+  }
+
   private amIPolite(socketIdOne: string, socketIdTwo: string): boolean {
     if (!socketIdTwo) {
       return false;

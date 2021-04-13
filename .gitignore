@@ -3,3 +3,4 @@ npm-debug.log
 .DS_Store
 /*.env
 webrtc-client/node_modules/
+*.js
