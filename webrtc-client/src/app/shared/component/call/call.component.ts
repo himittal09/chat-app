@@ -63,7 +63,9 @@ export class CallComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unlistendersList.push(this.renderer.listen(this.endCallButton.nativeElement, 'click', () => {
       this.service.close(true);
     }));
-    this.unlistendersList.push(this.renderer.listen(this.switchCameraButton.nativeElement, 'click', this.flipCameraUse));
+    this.unlistendersList.push(this.renderer.listen(this.switchCameraButton.nativeElement, 'click', () => {
+      this.flipCameraUse().then(() => {});
+    }));
     this.unlistendersList.push(this.renderer.listen(this.videoButton.nativeElement, 'click', () => {
       this.service.turnOffVideo().then(() => { });
     }));
@@ -167,8 +169,27 @@ export class CallComponent implements OnInit, AfterViewInit, OnDestroy {
     this.router.navigate(['/']);
   }
 
-  flipCameraUse() {
+  async flipCameraUse() {
+    this.service.stopStream();
+    this.renderer.setProperty(this.selfVideo.nativeElement, 'srcObject', null);
+    try {
+      const stream: MediaStream = await navigator.mediaDevices.getUserMedia({ 
+        audio: {
+          echoCancellation: true
+        },
+        video: {
+          facingMode: this.usingFrontCamera ? 'user' : 'environment'
+        }
+      });
+      this.service.attachMediaTracksFromOtherEnd(stream);
+      this.renderer.setProperty(this.selfVideo.nativeElement, 'srcObject', stream);
+    } catch (error) {
+      console.log(error);
+      this.handleGetUserMediaError(error);
+      this.service.close(true);
+    }
     this.usingFrontCamera = !this.usingFrontCamera;
+    
   }
 
   callOfferConfirm(callData: { description: RTCSessionDescription, fromUserSocket: string }) {
