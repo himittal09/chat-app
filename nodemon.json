@@ -1,6 +1,9 @@
 {
   "watch": ["/"],
   "ext": "ts,json",
-  "ignore": ["**/*.spec.ts"],
+  "ignore": [
+    "**/*.spec.ts",
+    "webrtc-client"
+  ],
   "exec": "ts-node ./index.ts"
 }
