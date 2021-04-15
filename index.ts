@@ -161,9 +161,8 @@ app.post('/geticeserver', (req: Request, res: Response) => {
 });
 
 app.get('**', (req: Request, res: Response) => {
-  let reqPath = req.params[0] ? req.params[0] : 'index.html';
-  res.sendFile(reqPath, {
-    root: "webrtc-client/dist"
+  res.sendFile('webrtc-client/dist/index.html', {
+    root: __dirname
   });
 });
 
