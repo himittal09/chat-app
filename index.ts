@@ -31,7 +31,7 @@ let socketIOServerConfig = {};
 if (process.env.NODE_ENV !== 'production') {
   socketIOServerConfig = {
     cors: {
-      origin: true
+      origin: 'https://calm-stream-20312.herokuapp.com'
     }
   }
 }
@@ -53,11 +53,9 @@ enum MessageType {
   'geolocation'
 }
 
-// if (process.env.NODE_ENV !== 'production') {
-  app.use(cors({
-    origin: 'https://calm-stream-20312.herokuapp.com'
-  }));
-// }
+app.use(cors({
+  origin: 'https://calm-stream-20312.herokuapp.com'
+}));
 app.use(express.static(path.join(__dirname, "webrtc-client/dist")));
 app.use(bodyParser.json());
 
@@ -160,6 +158,13 @@ app.post('/geticeserver', (req: Request, res: Response) => {
     console.log(error);
     res.status(500).send(error);
   })
+});
+
+app.get('**', (req: Request, res: Response) => {
+  let reqPath = req.params[0] ? req.params[0] : 'index.html';
+  res.sendFile(reqPath, {
+    root: "webrtc-client/dist"
+  });
 });
 
 io.on("connection", (socket: Socket) => {
